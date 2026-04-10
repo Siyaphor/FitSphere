@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=700&size=40&duration=3000&pause=500&color=1F2937&center=true&vCenter=true&width=800&height=120&lines=FitSphere+%7C+Gym+Management+Platform" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=700&size=40&duration=3000&pause=500&color=1F2937&center=true&vCenter=true&width=800&height=120&lines=FitSphere+%7C+Gym+Management" alt="Typing SVG" />
 </p>
 
 ## 💪 FitSphere - Gym Management & Fitness Service Booking Platform
