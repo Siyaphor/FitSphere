@@ -1,0 +1,94 @@
+<%- include('./partials/header', { pageTitle: 'Contact Us' }) %>
+
+<div class="contact-hero">
+  <p class="section-label" style="display:block; margin-bottom:0.5rem;">We'd Love to Hear From You</p>
+  <h1 class="section-title" style="margin-bottom:0.75rem;">Get In Touch</h1>
+  <p class="section-subtitle" style="margin:0 auto;">Have a question about membership, classes, or facilities? We're here to help.</p>
+</div>
+
+<div class="contact-grid">
+
+  <!-- Contact Info -->
+  <div class="contact-panel">
+    <h2 class="contact-panel-title">Contact Information</h2>
+
+    <div class="contact-info-item">
+      <div class="contact-icon">P</div>
+      <div>
+        <h4>Address</h4>
+        <p>Sector 17, Near City Centre Mall<br>Chandigarh - 160017, Punjab, India</p>
+      </div>
+    </div>
+
+    <div class="contact-info-item">
+      <div class="contact-icon">T</div>
+      <div>
+        <h4>Phone</h4>
+        <p>+91 98765 43210</p>
+      </div>
+    </div>
+
+    <div class="contact-info-item">
+      <div class="contact-icon">@</div>
+      <div>
+        <h4>Email</h4>
+        <p>hello@fitsphere.in</p>
+      </div>
+    </div>
+
+    <div class="contact-info-item">
+      <div class="contact-icon">H</div>
+      <div>
+        <h4>Opening Hours</h4>
+        <p>Mon - Fri: 05:00 - 23:00<br>Sat: 06:00 - 22:00 | Sun: 07:00 - 20:00</p>
+      </div>
+    </div>
+
+    <p class="contact-note"><strong>Response time:</strong> We usually reply within 24 hours.</p>
+  </div>
+
+  <!-- Contact Form -->
+  <div class="contact-panel">
+    <h2 class="contact-panel-title">Send a Message</h2>
+    <form action="/success" method="POST">
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Full name" required>
+        </div>
+        <div class="field-group">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+
+      <div class="field-group">
+        <label for="subject">Subject</label>
+        <select id="subject" name="subject">
+          <option value="" disabled selected>Select a topic</option>
+          <option>Membership Enquiry</option>
+          <option>Personal Training</option>
+          <option>Group Classes</option>
+          <option>Facilities</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Write your message..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary-gold form-submit">Send Message</button>
+    </form>
+  </div>
+
+</div>
+
+<%- include('./partials/footer') %>

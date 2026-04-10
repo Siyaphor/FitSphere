@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitSphere — Login</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Theme Variables (matches FitSphere style.css) ── */
+    :root {
+      --black:      #0a0a0a;
+      --charcoal:   #141414;
+      --dark:       #1c1c1c;
+      --mid:        #2a2a2a;
+      --steel:      #3d3d3d;
+      --muted:      #888;
+      --light:      #d4d4d4;
+      --white:      #f5f5f0;
+      --gold:       #e8a020;
+      --gold-light: #f2bc55;
+      --gold-dim:   #9a6a10;
+      --red:        #c0392b;
+      --green:      #27ae60;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--black);
+      color: var(--light);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Full-screen split layout ── */
+    .auth-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      min-height: 100vh;
+    }
+
+    /* ── LEFT: Background Image Panel ── */
+    .auth-visual {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-visual-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('/images/gym back.avif');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.28);
+      transform: scale(1.04);
+      animation: slowZoom 14s ease-out forwards;
+    }
+
+    @keyframes slowZoom {
+      from { transform: scale(1.06); }
+      to   { transform: scale(1.00); }
+    }
+
+    /* Gold diagonal accent overlay */
+    .auth-visual-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        125deg,
+        rgba(232, 160, 32, 0.12) 0%,
+        transparent 55%,
+        rgba(10, 10, 10, 0.6) 100%
+      );
+    }
+
+    /* Vertical gold line accent */
+    .auth-visual::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 0%, var(--gold) 40%, var(--gold) 60%, transparent 100%);
+      opacity: 0.35;
+    }
+
+    .auth-visual-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem 3.5rem;
+      animation: fadeUp 1s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+    }
+    .auth-brand span { color: var(--white); }
+
+    .auth-hero-text { margin-bottom: 2rem; }
+
+    .auth-hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .auth-hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      line-height: 0.95;
+      color: var(--white);
+    }
+    .auth-hero-title em {
+      font-style: normal;
+      color: var(--gold);
+      display: block;
+    }
+
+    .auth-hero-sub {
+      margin-top: 1.2rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.7;
+    }
+
+    /* Stat strip bottom-left */
+    .auth-stats {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .auth-stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .auth-stat-lbl {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── RIGHT: Form Panel ── */
+    .auth-panel {
+      background: var(--charcoal);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 2.8rem;
+      border-left: 1px solid var(--steel);
+      overflow-y: auto;
+      animation: slideIn 0.7s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── Role Toggle Tabs ── */
+    .role-tabs {
+      display: flex;
+      background: var(--dark);
+      border: 1.5px solid var(--steel);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .role-tab {
+      flex: 1;
+      padding: 0.6rem 0;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      transition: all 0.2s;
+      border: none;
+      outline: none;
+      background: transparent;
+    }
+    .role-tab:hover:not(.active) { color: var(--white); }
+    .role-tab.active {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    /* ── Form Mode Toggle (Login / Register) ── */
+    .mode-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1.5px solid var(--steel);
+      margin-bottom: 2rem;
+    }
+    .mode-tab {
+      flex: 1;
+      padding: 0.65rem 0;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1.5px;
+      transition: all 0.2s;
+    }
+    .mode-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .mode-tab:hover:not(.active) { color: var(--light); }
+
+    /* ── Panel Title ── */
+    .panel-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+      letter-spacing: 0.04em;
+    }
+    .panel-sub {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    /* ── Input Fields ── */
+    .f-group { margin-bottom: 1.1rem; }
+    .f-group label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    .f-group input,
+    .f-group select {
+      width: 100%;
+      background: var(--dark);
+      border: 1.5px solid var(--steel);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.72rem 1rem;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+    }
+    .f-group input::placeholder { color: var(--steel); }
+    .f-group input:focus,
+    .f-group select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(232,160,32,0.08);
+    }
+    .f-group select option { background: var(--dark); }
+
+    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+
+    /* ── Submit Button ── */
+    .auth-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.4rem;
+    }
+    .auth-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .auth-submit:active { transform: translateY(0); }
+
+    .auth-submit.admin-btn {
+      background: var(--mid);
+      color: var(--white);
+      border: 1.5px solid var(--steel);
+    }
+    .auth-submit.admin-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── Error / Success banners ── */
+    .auth-error {
+      background: rgba(192,57,43,0.14);
+      border: 1px solid rgba(192,57,43,0.5);
+      color: #e57e72;
+      font-size: 0.86rem;
+      padding: 0.7rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+    }
+    .auth-success {
+      background: rgba(39,174,96,0.12);
+      border: 1px solid rgba(39,174,96,0.4);
+      color: #5dbe8a;
+      font-size: 0.86rem;
+      padding: 0.7rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── Divider ── */
+    .auth-divider {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin: 1.2rem 0;
+      font-size: 0.75rem;
+      color: var(--steel);
+      letter-spacing: 0.1em;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--steel);
+    }
+
+    /* ── Bottom link ── */
+    .auth-back {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .auth-back a { color: var(--gold); font-weight: 600; transition: color 0.2s; }
+    .auth-back a:hover { color: var(--gold-light); }
+
+    /* ── Form visibility toggle ── */
+    .form-pane { display: none; }
+    .form-pane.active { display: block; }
+
+    /* ── Admin mode styling ── */
+    .auth-panel.is-admin { border-top: 2px solid #2980b9; }
+    .auth-panel.is-admin .role-tab.active { background: #2980b9; color: var(--white); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .auth-wrapper { grid-template-columns: 1fr; }
+      .auth-visual { display: none; }
+      .auth-panel { padding: 2rem 1.5rem; min-height: 100vh; }
+      body { overflow: auto; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="auth-wrapper" id="authWrapper">
+
+  <!-- ══════════════════════════════════
+       LEFT — Background visual panel
+  ══════════════════════════════════ -->
+  <div class="auth-visual">
+    <div class="auth-visual-bg" id="visualBg"></div>
+    <div class="auth-visual-overlay"></div>
+    <div class="auth-visual-content">
+
+      <!-- Brand top-left -->
+      <div class="auth-brand">Fit<span>Sphere</span></div>
+
+      <!-- Hero text centre -->
+      <div class="auth-hero-text">
+        <p class="auth-hero-eyebrow" id="visualEyebrow"> Chandigarh's Premier Gym</p>
+        <h1 class="auth-hero-title" id="visualTitle">
+          Forge Your
+          <em id="visualTitleEm">Legend</em>
+        </h1>
+        <p class="auth-hero-sub" id="visualSub">
+          Your fitness journey continues here. Track progress, book sessions, and push beyond your limits.
+        </p>
+      </div>
+
+      <!-- Stats strip bottom -->
+      <div class="auth-stats">
+        <div>
+          <div class="auth-stat-num">2K+</div>
+          <div class="auth-stat-lbl">Members</div>
+        </div>
+        <div>
+          <div class="auth-stat-num">18</div>
+          <div class="auth-stat-lbl">Expert Trainers</div>
+        </div>
+        <div>
+          <div class="auth-stat-num">12+</div>
+          <div class="auth-stat-lbl">Years Strong</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       RIGHT — Auth Form Panel
+  ══════════════════════════════════ -->
+  <div class="auth-panel" id="authPanel">
+
+    <!-- Role Toggle: Member / Admin -->
+    <div class="role-tabs">
+      <button class="role-tab active" id="tabMember" onclick="switchRole('member')">
+         Member
+      </button>
+      <button class="role-tab" id="tabAdmin" onclick="switchRole('admin')">
+         Admin
+      </button>
+    </div>
+
+    <!-- ── MEMBER SECTION ── -->
+    <div id="memberSection">
+
+      <!-- Mode tabs: Login / Register -->
+      <div class="mode-tabs">
+        <button class="mode-tab active" id="modeLogin" onclick="switchMode('login')">Sign In</button>
+        <button class="mode-tab" id="modeRegister" onclick="switchMode('register')">Register</button>
+      </div>
+
+      <!-- ── LOGIN FORM ── -->
+      <div class="form-pane active" id="paneLogin">
+        <h1 class="panel-title">Welcome Back</h1>
+        <p class="panel-sub">Sign in to your FitSphere account</p>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="auth-error">⚠ <%= error %></div>
+        <% } %>
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="auth-success">✓ <%= success %></div>
+        <% } %>
+
+        <form action="/login" method="POST">
+          <div class="f-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="you@email.com" required autocomplete="email">
+          </div>
+          <div class="f-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="auth-submit">Sign In →</button>
+        </form>
+
+        <div class="auth-divider">or</div>
+        <p style="text-align:center; font-size:0.85rem; color:var(--muted);">
+          New here? <a href="#" onclick="switchMode('register')" style="color:var(--gold); font-weight:600;">Create a free account</a>
+        </p>
+      </div>
+
+      <!-- ── REGISTER FORM ── -->
+      <div class="form-pane" id="paneRegister">
+        <h1 class="panel-title">Join FitSphere</h1>
+        <p class="panel-sub">Create your member account in seconds</p>
+
+        <% if (typeof regError !== 'undefined' && regError) { %>
+          <div class="auth-error">⚠ <%= regError %></div>
+        <% } %>
+
+        <form action="/register" method="POST">
+          <div class="f-row">
+            <div class="f-group">
+              <label>First Name</label>
+              <input type="text" name="firstName" placeholder="Arjun" required>
+            </div>
+            <div class="f-group">
+              <label>Last Name</label>
+              <input type="text" name="lastName" placeholder="Singh" required>
+            </div>
+          </div>
+          <div class="f-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="arjun@email.com" required>
+          </div>
+          <div class="f-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="+91 98765 43210">
+          </div>
+          <div class="f-group">
+            <label>Membership Plan</label>
+            <select name="plan" required>
+              <option value="" disabled selected>Choose a plan...</option>
+              <option value="basic">Basic — ₹1,499/month</option>
+              <option value="premium">Premium — ₹3,299/month</option>
+              <option value="elite">Elite — ₹5,999/month</option>
+            </select>
+          </div>
+          <div class="f-row">
+            <div class="f-group">
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Min 6 chars" required minlength="6">
+            </div>
+            <div class="f-group">
+              <label>Confirm</label>
+              <input type="password" name="confirmPassword" placeholder="Repeat" required>
+            </div>
+          </div>
+          <button type="submit" class="auth-submit">Create Account →</button>
+        </form>
+
+        <div class="auth-divider">or</div>
+        <p style="text-align:center; font-size:0.85rem; color:var(--muted);">
+          Already a member? <a href="#" onclick="switchMode('login')" style="color:var(--gold); font-weight:600;">Sign in here</a>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ── ADMIN SECTION ── -->
+    <div id="adminSection" style="display:none;">
+      <h1 class="panel-title">Admin Access</h1>
+      <p class="panel-sub">Authorised FitSphere personnel only</p>
+
+      <% if (typeof adminError !== 'undefined' && adminError) { %>
+        <div class="auth-error">⚠ <%= adminError %></div>
+      <% } %>
+
+      <form action="/admin/login" method="POST">
+        <div class="f-group">
+          <label>Admin Email</label>
+          <input type="email" name="email" placeholder="admin@fitsphere.in" required autocomplete="username">
+        </div>
+        <div class="f-group">
+          <label>Admin Password</label>
+          <input type="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <!-- Access level selector -->
+        <div class="f-group">
+          <label>Access Level</label>
+          <select name="role">
+            <option value="superadmin">Super Admin</option>
+            <option value="manager">Manager</option>
+            <option value="trainer">Trainer View</option>
+          </select>
+        </div>
+
+        <button type="submit" class="auth-submit admin-btn">Access Dashboard →</button>
+      </form>
+
+      <div style="margin-top:1.5rem; padding:1rem; background:var(--dark); border:1px solid var(--steel); border-radius:2px;">
+        <p style="font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em; font-weight:700; margin-bottom:0.5rem;">Demo Credentials</p>
+        <p style="font-size:0.83rem; color:var(--light);"> admin@fitsphere.in</p>
+        <p style="font-size:0.83rem; color:var(--light);"> admin123</p>
+      </div>
+    </div>
+
+    <!-- Back to website -->
+    <div class="auth-back">
+      <a href="/">← Back to FitSphere.in</a>
+    </div>
+
+  </div><!-- /auth-panel -->
+
+</div><!-- /auth-wrapper -->
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script>
+  /* ── Mode: login ↔ register ── */
+  function switchMode(mode) {
+    const isLogin = mode === 'login';
+    document.getElementById('paneLogin').classList.toggle('active', isLogin);
+    document.getElementById('paneRegister').classList.toggle('active', !isLogin);
+    document.getElementById('modeLogin').classList.toggle('active', isLogin);
+    document.getElementById('modeRegister').classList.toggle('active', !isLogin);
+  }
+
+  /* ── Role: member ↔ admin ── */
+  function switchRole(role) {
+    const isAdmin = role === 'admin';
+
+    document.getElementById('tabMember').classList.toggle('active', !isAdmin);
+    document.getElementById('tabAdmin').classList.toggle('active', isAdmin);
+
+    document.getElementById('memberSection').style.display = isAdmin ? 'none' : '';
+    document.getElementById('adminSection').style.display  = isAdmin ? '' : 'none';
+
+    const panel = document.getElementById('authPanel');
+    panel.classList.toggle('is-admin', isAdmin);
+
+    // Swap background image and copy
+    const bg = document.getElementById('visualBg');
+    const titleEm = document.getElementById('visualTitleEm');
+    const eyebrow = document.getElementById('visualEyebrow');
+    const sub     = document.getElementById('visualSub');
+
+    if (isAdmin) {
+      bg.style.backgroundImage = "url('/images/gym front.avif')";
+      titleEm.textContent = 'Control';
+      document.getElementById('visualTitle').childNodes[0].textContent = 'Admin ';
+      eyebrow.textContent = ' Management Portal';
+      sub.textContent = 'Manage members, track revenue, oversee trainers and gym operations — all from one dashboard.';
+    } else {
+      bg.style.backgroundImage = "url('/images/gym back.avif')";
+      titleEm.textContent = 'Legend';
+      document.getElementById('visualTitle').childNodes[0].textContent = 'Forge Your ';
+      eyebrow.textContent = ' Chandigarh\'s Premier Gym';
+      sub.textContent = 'Your fitness journey continues here. Track progress, book sessions, and push beyond your limits.';
+    }
+  }
+
+  /* ── Auto-switch to register if ?mode=register in URL ── */
+  if (new URLSearchParams(window.location.search).get('mode') === 'register') {
+    switchMode('register');
+  }
+  /* ── Auto-switch to admin if ?role=admin in URL ── */
+  if (new URLSearchParams(window.location.search).get('role') === 'admin') {
+    switchRole('admin');
+  }
+</script>
+
+</body>
+</html>

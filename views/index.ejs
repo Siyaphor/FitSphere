@@ -1,0 +1,302 @@
+<%- include('./partials/header', { pageTitle: 'Elite Fitness' }) %>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <p class="hero-tag"> Chandigarh's Premier Gym</p>
+    <h1 class="hero-title">
+      Forge Your
+      <em>Legend</em>
+    </h1>
+    <p class="hero-desc">
+      World-class equipment, elite coaches, and a culture built for people
+      who refuse to settle for average.
+    </p>
+    <div class="hero-ctas">
+      <a href="/form" class="btn-primary-gold">Start Your Journey</a>
+      <a href="/#plans" class="btn-white-outline">View Plans</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">12+</div>
+      <div class="stat-label">Years Strong</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2K+</div>
+      <div class="stat-label">Members</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">18</div>
+      <div class="stat-label">Expert Trainers</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PLANS ===== -->
+<section class="section plans-section" id="plans">
+  <div class="section-inner">
+    <p class="section-label">Membership</p>
+    <h2 class="section-title">Choose Your Plan</h2>
+    <span class="divider"></span>
+    <p class="section-subtitle">Flexible memberships designed for every goal and lifestyle. No hidden fees.</p>
+
+    <div class="plans-grid">
+
+      <!-- Basic -->
+      <div class="plan-card">
+        <img src="/images/gym plan.avif" alt="Basic Plan" class="plan-img">
+        <h3 class="plan-name">Basic</h3>
+        <div class="plan-price">₹1,499<span>/mo</span></div>
+        <p class="plan-period">Billed monthly · Cancel anytime</p>
+        <ul class="plan-features">
+          <li><i class="fi">✦</i> Full Gym Floor Access</li>
+          <li><i class="fi">✦</i> Cardio Zone</li>
+          <li><i class="fi">✦</i> 2 Group Classes / Week</li>
+          <li><i class="fi">✦</i> Locker Room Access</li>
+          <li><i class="fi fx">✗</i> <span style="color:var(--steel)">Personal Trainer</span></li>
+          <li><i class="fi fx">✗</i> <span style="color:var(--steel)">Nutrition Consult</span></li>
+        </ul>
+        <a href="/form" class="btn-outline-gold">Get Started</a>
+      </div>
+
+      <!-- Premium (featured) -->
+      <div class="plan-card featured">
+        <img src="/images/plan2 gym.avif" alt="Premium Plan" class="plan-img">
+        <h3 class="plan-name">Premium</h3>
+        <div class="plan-price">₹3,299<span>/mo</span></div>
+        <p class="plan-period">Billed monthly · Cancel anytime</p>
+        <ul class="plan-features">
+          <li><i class="fi">✦</i> Everything in Basic</li>
+          <li><i class="fi">✦</i> Unlimited Group Classes</li>
+          <li><i class="fi">✦</i> 4 PT Sessions / Month</li>
+          <li><i class="fi">✦</i> Body Composition Analysis</li>
+          <li><i class="fi">✦</i> Sauna &amp; Recovery Zone</li>
+          <li><i class="fi fx">✗</i> <span style="color:var(--steel)">Nutrition Consult</span></li>
+        </ul>
+        <a href="/form" class="btn-primary-gold">Get Started</a>
+      </div>
+
+      <!-- Elite -->
+      <div class="plan-card">
+        <img src="/images/gym front.avif" alt="Elite Plan" class="plan-img">
+        <h3 class="plan-name">Elite</h3>
+        <div class="plan-price">₹5,999<span>/mo</span></div>
+        <p class="plan-period">Billed monthly · Cancel anytime</p>
+        <ul class="plan-features">
+          <li><i class="fi">✦</i> Everything in Premium</li>
+          <li><i class="fi">✦</i> Unlimited PT Sessions</li>
+          <li><i class="fi">✦</i> Monthly Nutrition Consult</li>
+          <li><i class="fi">✦</i> Priority Class Booking</li>
+          <li><i class="fi">✦</i> Guest Pass (2/month)</li>
+          <li><i class="fi">✦</i> Exclusive Member Lounge</li>
+        </ul>
+        <a href="/form" class="btn-outline-gold">Get Started</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section class="section services-section" id="services">
+  <div class="section-inner">
+    <p class="section-label">Signature Services</p>
+    <h2 class="section-title">Training Beyond The Gym Floor</h2>
+    <span class="divider"></span>
+    <p class="section-subtitle">Explore premium coaching and recovery services that help members move, perform, and recover better.</p>
+
+    <div class="services-grid">
+      <% if (services && services.length) { %>
+        <% services.forEach(service => { %>
+          <article class="service-card">
+            <img src="<%= service.image %>" alt="<%= service.title %>" class="service-card-img">
+            <div class="service-card-body">
+              <h3 class="service-card-title"><%= service.title %></h3>
+              <p class="service-card-text"><%= service.description %></p>
+              <a href="/login?redirect=/dashboard/bookings/new&service=<%= service._id %>" class="btn-primary-gold">Book Service</a>
+            </div>
+          </article>
+        <% }) %>
+      <% } else { %>
+        <article class="service-card">
+          <img src="/images/trainer-1.avif" alt="Personal Training" class="service-card-img">
+          <div class="service-card-body">
+            <h3 class="service-card-title">Personal Training</h3>
+            <p class="service-card-text">One-on-one sessions built around your goals, movement quality, and measurable progress.</p>
+            <a href="/login" class="btn-primary-gold">Book Service</a>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <img src="/images/trainer-3.avif" alt="Athletic Conditioning" class="service-card-img">
+          <div class="service-card-body">
+            <h3 class="service-card-title">Athletic Conditioning</h3>
+            <p class="service-card-text">Performance-focused training for endurance, speed, and power with expert coaching support.</p>
+            <a href="/login" class="btn-primary-gold">Book Service</a>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <img src="/images/trainer-4.avif" alt="Nutrition Guidance" class="service-card-img">
+          <div class="service-card-body">
+            <h3 class="service-card-title">Nutrition Guidance</h3>
+            <p class="service-card-text">Practical nutrition plans designed to support muscle gain, fat loss, and long-term health.</p>
+            <a href="/login" class="btn-primary-gold">Book Service</a>
+          </div>
+        </article>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRAINERS ===== -->
+<section class="section trainers-section" id="trainers">
+  <div class="section-inner">
+    
+    <p class="section-label">Expert Staff</p>
+    <h2 class="section-title">Meet Your Coaches</h2>
+    <span class="divider"></span>
+    <p class="section-subtitle">
+      Hand-picked professionals certified in their disciplines — ready to push you further.
+    </p>
+
+    <div class="trainers-grid">
+
+      <!-- Trainer 1 -->
+      <div class="trainer-card">
+        <div class="trainer-img-wrap">
+          <img src="/images/trainer-1.avif" alt="Arjun Singh">
+        </div>
+        <div class="trainer-overlay">
+          <div class="trainer-name">Arjun Singh</div>
+          <div class="trainer-role">Strength &amp; Powerlifting Coach</div>
+        </div>
+      </div>
+
+      <!-- Trainer 2 -->
+      <div class="trainer-card">
+        <div class="trainer-img-wrap">
+          <img src="/images/trainer-2.jpg" alt="Simran Kaur">
+        </div>
+        <div class="trainer-overlay">
+          <div class="trainer-name">Simran Kaur</div>
+          <div class="trainer-role">Yoga &amp; Flexibility Expert</div>
+        </div>
+      </div>
+
+      <!-- Trainer 3 -->
+      <div class="trainer-card">
+        <div class="trainer-img-wrap">
+          <img src="/images/trainer-3.avif" alt="Rahul Verma">
+        </div>
+        <div class="trainer-overlay">
+          <div class="trainer-name">Rahul Verma</div>
+          <div class="trainer-role">HIIT &amp; Cardio Specialist</div>
+        </div>
+      </div>
+
+      <!-- Trainer 4 -->
+      <div class="trainer-card">
+        <div class="trainer-img-wrap">
+          <img src="/images/trainer-4.avif" alt="Priya Mehta">
+        </div>
+        <div class="trainer-overlay">
+          <div class="trainer-name">Priya Mehta</div>
+          <div class="trainer-role">Nutrition &amp; Wellness Coach</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== BOOKING CTA BANNER ===== -->
+<div style="background: var(--gold); padding: 3.5rem 2.5rem; text-align: center;">
+  <p style="font-size:0.75rem; letter-spacing:0.25em; text-transform:uppercase; color:rgba(0,0,0,0.55); margin-bottom:0.5rem; font-weight:700;">Limited Spots Available</p>
+  <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,5vw,3.5rem); color:var(--black); margin-bottom:1.5rem; letter-spacing:0.04em;">
+    Ready to Transform Your Body?
+  </h2>
+  <a href="/form" class="btn-outline-gold" style="border-color:var(--black); color:var(--black);">Book a Free Trial</a>
+</div>
+
+<!-- ===== ABOUT / LOCATION / HOURS ===== -->
+<section class="section about-section" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+
+      <!-- Image side -->
+      <div class="about-img-block">
+        <img src="/images/gym back.avif" alt="FitSphere Gym Interior" class="about-img">
+        <div class="about-accent-box">
+          <strong>12+</strong>
+          Years Serving Chandigarh
+        </div>
+      </div>
+
+      <!-- Text side -->
+      <div class="about-text">
+        <p class="section-label">About FitSphere</p>
+        <h2 class="section-title">More Than Just a Gym</h2>
+        <span class="divider"></span>
+        <p class="section-subtitle">
+          FitSphere was founded on a simple belief — that everyone deserves access to elite training
+          facilities and expert guidance, regardless of where they're starting from.
+          Located in the heart of Chandigarh, we've built a community of over 2,000 members
+          who show up, put in the work, and get real results.
+        </p>
+
+        <!-- Hours Table -->
+        <h3 class="hours-title">Opening Hours</h3>
+        <table class="hours-table">
+          <tr>
+            <td>Monday</td>
+            <td>05:00 – 23:00</td>
+          </tr>
+          <tr>
+            <td>Tuesday</td>
+            <td>05:00 – 23:00</td>
+          </tr>
+          <tr>
+            <td>Wednesday</td>
+            <td>05:00 – 23:00</td>
+          </tr>
+          <tr>
+            <td>Thursday</td>
+            <td>05:00 – 23:00</td>
+          </tr>
+          <tr>
+            <td>Friday</td>
+            <td>05:00 – 23:00</td>
+          </tr>
+          <tr>
+            <td>Saturday</td>
+            <td>06:00 – 22:00</td>
+          </tr>
+          <tr>
+            <td>Sunday</td>
+            <td>07:00 – 20:00</td>
+          </tr>
+        </table>
+
+        <!-- Address -->
+        <div class="address-block" style="margin-top:2rem;">
+          <strong>Our Location</strong>
+          <p>Sector 17, Near City Centre Mall<br>Chandigarh — 160017<br>Punjab, India</p>
+        </div>
+
+        <div style="margin-top:2rem;">
+          <a href="/contact" class="btn-primary-gold">Contact Us</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<%- include('./partials/footer') %>

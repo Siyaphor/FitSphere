@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Services</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --charcoal: #141414;
+      --dark: #1c1c1c;
+      --steel: #3d3d3d;
+      --light: #d4d4d4;
+      --white: #f5f5f0;
+      --gold: #e89f21;
+      --gold-light: #f2bc55;
+      --danger: #c0392b;
+    }
+
+    body {
+      background: linear-gradient(180deg, #0a0a0a 0%, #141414 100%);
+      color: var(--light);
+      min-height: 100vh;
+    }
+
+    .admin-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    .admin-card {
+      background: rgba(28, 28, 28, 0.95);
+      border: 1px solid rgba(232, 159, 33, 0.2);
+      border-radius: 12px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.28);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      font-weight: 700;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      color: #000;
+    }
+
+    .form-control,
+    .form-control:focus {
+      background: var(--dark);
+      color: var(--white);
+      border-color: var(--steel);
+      box-shadow: none;
+    }
+
+    .form-label {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .helper-text {
+      color: #ffffff;
+      font-size: 0.92rem;
+    }
+
+    .service-preview {
+      width: 96px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(232, 159, 33, 0.22);
+    }
+
+    .table {
+      --bs-table-bg: transparent;
+      --bs-table-color: var(--light);
+      --bs-table-border-color: rgba(232, 159, 33, 0.14);
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-shell">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+      <div>
+        <p class="text-uppercase mb-1" style="letter-spacing:0.25em; color:#f2bc55; font-size:0.75rem;">Admin Services</p>
+        <h1 class="h2 mb-1" style="color:#f5f5f0;">Add Services For Home Page</h1>
+        <p class="mb-0 helper-text">Create service cards with a title, image, and short description.</p>
+      </div>
+      <div class="d-flex gap-2">
+        <a href="/admin" class="btn btn-outline-light">Back to Dashboard</a>
+        <a href="/" class="btn btn-gold">View Home Page</a>
+      </div>
+    </div>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="admin-card p-4">
+          <h2 class="h4 mb-3" style="color:#f5f5f0;">New Service</h2>
+          <form action="/admin/services" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="title" class="form-label">Service Title</label>
+              <input type="text" class="form-control" id="title" name="title" placeholder="Personal Training" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" name="description" rows="5" placeholder="Tell members what this service offers..." required></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="serviceImage" class="form-label">Service Photo</label>
+              <input type="file" class="form-control" id="serviceImage" name="serviceImage" accept="image/*" required>
+              <p class="helper-text mt-2 mb-0">Upload a JPG, PNG, AVIF, or WebP image for the home page card.</p>
+            </div>
+
+            <button type="submit" class="btn btn-gold w-100">Add Service</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="admin-card p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h4 mb-0" style="color:#f5f5f0;">Current Services</h2>
+            <span class="helper-text"><%= services.length %> item(s)</span>
+          </div>
+
+          <% if (!services.length) { %>
+            <p class="helper-text mb-0">No services added yet. Your first service will appear on the home page once you submit this form.</p>
+          <% } else { %>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% services.forEach(service => { %>
+                    <tr>
+                      <td><img src="<%= service.image %>" alt="<%= service.title %>" class="service-preview"></td>
+                      <td><strong><%= service.title %></strong></td>
+                      <td><%= service.description %></td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

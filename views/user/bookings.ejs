@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Service Bookings</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #f5f5f0;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .sidebar {
+      min-height: 100vh;
+      background: #141414;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      color: #e8a020;
+      font-weight: bold;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #d4d4d4;
+      margin: 10px 0;
+      text-decoration: none;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      color: #e8a020;
+    }
+
+    .panel,
+    .table-card {
+      background: #1c1c1c;
+      border: 1px solid #3d3d3d;
+      border-radius: 12px;
+    }
+
+    .topbar {
+      background: #141414;
+      padding: 15px;
+      border-bottom: 1px solid #3d3d3d;
+    }
+
+    .form-control,
+    .form-select,
+    .form-control:focus,
+    .form-select:focus {
+      background: #111;
+      border-color: #3d3d3d;
+      color: #f5f5f0;
+      box-shadow: none;
+    }
+
+    .btn-gold {
+      background: #e8a020;
+      color: #000;
+      border: none;
+      font-weight: 700;
+    }
+
+    .btn-gold:hover {
+      background: #f2bc55;
+      color: #000;
+    }
+
+    .table {
+      --bs-table-bg: transparent;
+      --bs-table-color: #f5f5f0;
+      --bs-table-border-color: #3d3d3d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2 sidebar">
+        <h2>FitSphere</h2>
+        <hr>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/dashboard/bookings/new" class="active">Book Service</a>
+        <a href="/dashboard/profile">Profile</a>
+        <a href="/dashboard/membership">Membership</a>
+        <a href="/logout">Logout</a>
+      </div>
+
+      <div class="col-md-10">
+        <div class="topbar d-flex justify-content-between">
+          <h4>Book a Service</h4>
+          <span><%= user.email %></span>
+        </div>
+
+        <div class="p-4">
+          <% if (typeof success !== 'undefined' && success) { %>
+            <div class="alert alert-success"><%= success %></div>
+          <% } %>
+
+          <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-danger"><%= error %></div>
+          <% } %>
+
+          <div class="row g-4">
+            <div class="col-lg-5">
+              <div class="panel p-4">
+                <h5 class="mb-3">New Booking</h5>
+                <form action="/dashboard/bookings" method="POST">
+                  <div class="mb-3">
+                    <label for="serviceId" class="form-label">Select Service</label>
+                    <select id="serviceId" name="serviceId" class="form-select" required>
+                      <option value="">Choose a service</option>
+                      <% services.forEach(service => { %>
+                        <option value="<%= service._id %>" <%= selectedServiceId === String(service._id) ? 'selected' : '' %>>
+                          <%= service.title %>
+                        </option>
+                      <% }) %>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="preferredDate" class="form-label">Preferred Date</label>
+                    <input type="date" id="preferredDate" name="preferredDate" class="form-control" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="preferredTime" class="form-label">Preferred Time</label>
+                    <input type="time" id="preferredTime" name="preferredTime" class="form-control" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="notes" class="form-label">Notes</label>
+                    <textarea id="notes" name="notes" rows="4" class="form-control" placeholder="Preferred trainer, goals, or anything else"></textarea>
+                  </div>
+
+                  <button type="submit" class="btn btn-gold w-100">Confirm Booking</button>
+                </form>
+              </div>
+            </div>
+
+            <div class="col-lg-7">
+              <div class="table-card p-4">
+                <h5 class="mb-3">Your Bookings</h5>
+                <div class="table-responsive">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if (!bookings.length) { %>
+                        <tr>
+                          <td colspan="4">No service bookings yet.</td>
+                        </tr>
+                      <% } %>
+                      <% bookings.forEach(booking => { %>
+                        <tr>
+                          <td><%= booking.serviceTitle %></td>
+                          <td><%= booking.preferredDate %></td>
+                          <td><%= booking.preferredTime %></td>
+                          <td><%= booking.status %></td>
+                        </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

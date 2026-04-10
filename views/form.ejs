@@ -1,0 +1,83 @@
+<%- include('./partials/header', { pageTitle: 'Join FitSphere' }) %>
+
+<section class="section form-section">
+  <div class="section-inner">
+
+    <div class="form-wrap">
+
+      <!-- Left info block -->
+      <div>
+        <p class="section-label">Membership</p>
+        <h1 class="form-info-title">Start Your Journey Today</h1>
+        <span class="divider"></span>
+        <p class="form-info-body">
+          Fill out the form and one of our team members will reach out within 24 hours
+          to confirm your membership, arrange your first visit, and answer any questions you have.
+          <br><br>
+          First session is always on us — no commitment required.
+        </p>
+        <img src="/images/gym front.avif" alt="FitSphere Gym" class="form-info-img">
+      </div>
+
+      <!-- Right form block -->
+      <div>
+        <form action="/success" method="POST">
+
+          <div class="form-row">
+            <div class="field-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" placeholder="Arjun" required>
+            </div>
+            <div class="field-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Singh" required>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="arjun@email.com" required>
+          </div>
+
+          <div class="field-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required>
+          </div>
+
+          <div class="field-group">
+            <label for="plan">Select Membership Plan</label>
+            <select id="plan" name="plan" required>
+              <option value="" disabled selected>Choose a plan...</option>
+              <option value="basic">Basic — ₹1,499/month</option>
+              <option value="premium">Premium — ₹3,299/month</option>
+              <option value="elite">Elite — ₹5,999/month</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="goal">Your Primary Goal</label>
+            <select id="goal" name="goal">
+              <option value="" disabled selected>What brings you here?</option>
+              <option value="weight-loss">Weight Loss</option>
+              <option value="muscle-gain">Muscle Gain</option>
+              <option value="endurance">Endurance / Cardio</option>
+              <option value="flexibility">Flexibility &amp; Mobility</option>
+              <option value="general">General Fitness</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="message">Anything Else We Should Know?</label>
+            <textarea id="message" name="message" placeholder="Any injuries, preferences, schedule constraints..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary-gold form-submit">Submit Application →</button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<%- include('./partials/footer') %>

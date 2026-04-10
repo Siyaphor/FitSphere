@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitSphere — <%= typeof pageTitle !== 'undefined' ? pageTitle : 'Elite Fitness' %></title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="/">Fit<span>Sphere</span></a>
+
+  <div class="nav-toggle" id="navToggle" onclick="this.nextElementSibling.classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/">Home</a>
+    <a href="/#plans">Plans</a>
+    <a href="/#trainers">Trainers</a>
+    <a href="/#about">About</a>
+    <a href="/contact">Contact</a>
+    <a href="/form" class="btn-nav">Join Now</a>
+    <a href="/login" class="btn-nav">Login</a>
+  </div>
+</nav>
